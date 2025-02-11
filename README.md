@@ -1,7 +1,7 @@
 Kidney-Disease-Classification-MLflow-DVC
 Workflows
-Update config.yaml
-Update secrets.yaml [Optional]
+1.Update config.yaml
+2.Update secrets.yaml [Optional]
 Update params.yaml
 Update the entity
 Update the configuration manager in src config
