@@ -15,3 +15,74 @@
 [2025-02-16 00:32:48,774: INFO: main: >>>>>> stage Data Ingestion stage completed <<<<<<
 
 x==========x]
+[2025-02-16 16:50:18,279: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-02-16 16:50:18,296: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-02-16 16:50:18,299: INFO: common: created directory at: artifacts]
+[2025-02-16 16:51:15,416: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-02-16 16:51:15,421: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-02-16 16:51:15,422: INFO: common: created directory at: artifacts]
+[2025-02-16 16:51:15,424: INFO: common: created directory at: artifacts/prepare_base_model]
+[2025-02-16 16:52:11,726: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-02-16 16:52:11,731: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-02-16 16:52:11,736: INFO: common: created directory at: artifacts]
+[2025-02-16 16:52:11,737: INFO: common: created directory at: artifacts/prepare_base_model]
+[2025-02-16 16:52:19,702: WARNING: saving_utils: Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.]
+[2025-02-16 17:02:35,851: INFO: main: >>>>>> stage Data Ingestion stage started <<<<<<]
+[2025-02-16 17:02:35,855: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-02-16 17:02:35,858: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-02-16 17:02:35,860: INFO: common: created directory at: artifacts]
+[2025-02-16 17:02:35,860: ERROR: main: 'ConfigurationManager' object has no attribute 'get_data_ingestion_config']
+Traceback (most recent call last):
+  File "main.py", line 11, in <module>
+    data_ingestion.main()
+  File "D:\data science projects\kedneydiseaseclasifficationdeeplearning\src\cnnClassifier\pipeline\stage_01_data_ingestion.py", line 14, in main
+    data_ingestion_config = config.get_data_ingestion_config()
+AttributeError: 'ConfigurationManager' object has no attribute 'get_data_ingestion_config'
+[2025-02-16 17:11:49,411: INFO: main: >>>>>> stage Data Ingestion stage started <<<<<<]
+[2025-02-16 17:11:49,413: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-02-16 17:11:49,416: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-02-16 17:11:49,417: INFO: common: created directory at: artifacts]
+[2025-02-16 17:11:49,417: ERROR: main: 'ConfigurationManager' object has no attribute 'get_data_ingestion_config']
+Traceback (most recent call last):
+  File "main.py", line 11, in <module>
+    data_ingestion.main()
+  File "D:\data science projects\kedneydiseaseclasifficationdeeplearning\src\cnnClassifier\pipeline\stage_01_data_ingestion.py", line 14, in main
+    data_ingestion_config = config.get_data_ingestion_config()
+AttributeError: 'ConfigurationManager' object has no attribute 'get_data_ingestion_config'
+[2025-02-16 17:12:50,471: INFO: main: >>>>>> stage Data Ingestion stage started <<<<<<]
+[2025-02-16 17:12:50,473: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-02-16 17:12:50,474: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-02-16 17:12:50,475: INFO: common: created directory at: artifacts]
+[2025-02-16 17:12:50,475: INFO: common: created directory at: artifacts/data_ingestion]
+[2025-02-16 17:12:50,475: INFO: data_ingestion: Downloading data from https://drive.google.com/file/d/1vlhZ5c7abUKF8xXERIw6m9Te8fW7ohw3/view?usp=sharing into file artifacts/data_ingestion/data.zip]
+[2025-02-16 17:13:01,542: INFO: data_ingestion: Downloaded data from https://drive.google.com/file/d/1vlhZ5c7abUKF8xXERIw6m9Te8fW7ohw3/view?usp=sharing into file artifacts/data_ingestion/data.zip]
+[2025-02-16 17:13:02,254: INFO: main: >>>>>> stage Data Ingestion stage completed <<<<<<
+
+x==========x]
+[2025-02-16 17:13:02,254: INFO: main: *******************]
+[2025-02-16 17:13:02,254: INFO: main: >>>>>> stage Prepare base model started <<<<<<]
+[2025-02-16 17:13:02,255: ERROR: main: name 'PrepareBaseModelTrainingPipeline' is not defined]
+Traceback (most recent call last):
+  File "main.py", line 21, in <module>
+    prepare_base_model = PrepareBaseModelTrainingPipeline()
+NameError: name 'PrepareBaseModelTrainingPipeline' is not defined
+[2025-02-16 17:19:55,509: INFO: main: >>>>>> stage Data Ingestion stage started <<<<<<]
+[2025-02-16 17:19:55,511: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-02-16 17:19:55,519: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-02-16 17:19:55,522: INFO: common: created directory at: artifacts]
+[2025-02-16 17:19:55,523: INFO: common: created directory at: artifacts/data_ingestion]
+[2025-02-16 17:19:55,523: INFO: data_ingestion: Downloading data from https://drive.google.com/file/d/1vlhZ5c7abUKF8xXERIw6m9Te8fW7ohw3/view?usp=sharing into file artifacts/data_ingestion/data.zip]
+[2025-02-16 17:20:07,236: INFO: data_ingestion: Downloaded data from https://drive.google.com/file/d/1vlhZ5c7abUKF8xXERIw6m9Te8fW7ohw3/view?usp=sharing into file artifacts/data_ingestion/data.zip]
+[2025-02-16 17:20:07,853: INFO: main: >>>>>> stage Data Ingestion stage completed <<<<<<
+
+x==========x]
+[2025-02-16 17:20:07,854: INFO: main: *******************]
+[2025-02-16 17:20:07,854: INFO: main: >>>>>> stage Prepare base model started <<<<<<]
+[2025-02-16 17:20:07,858: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-02-16 17:20:07,862: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-02-16 17:20:07,863: INFO: common: created directory at: artifacts]
+[2025-02-16 17:20:07,864: INFO: common: created directory at: artifacts/prepare_base_model]
+[2025-02-16 17:20:08,776: WARNING: saving_utils: Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.]
+[2025-02-16 17:20:09,538: INFO: main: >>>>>> stage Prepare base model completed <<<<<<
+
+x==========x]
