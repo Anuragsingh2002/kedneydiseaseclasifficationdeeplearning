@@ -1,71 +1,74 @@
 import tensorflow as tf
 from pathlib import Path
-#import mlflow
-#import mlflow.keras
+import mlflow
+import mlflow.keras
 from urllib.parse import urlparse
-from src.cnnClassifier.entity.config_entity import PrepareBaseModelConfig
+from src.cnnClassifier.entity.config_entity import *
+
 from src.cnnClassifier.utils.common import read_yaml, create_directories,save_json
 
-
-class PrepareBaseModel:
-    def __init__(self, config: PrepareBaseModelConfig):
+class Evaluation:
+    def __init__(self, config: EvaluationConfig):
         self.config = config
 
     
-    def get_base_model(self):
-        self.model = tf.keras.applications.vgg16.VGG16(
-            input_shape=self.config.params_image_size,
-            weights=self.config.params_weights,
-            include_top=self.config.params_include_top
+    def _valid_generator(self):
+
+        datagenerator_kwargs = dict(
+            rescale = 1./255,
+            validation_split=0.30
         )
 
-        self.save_model(path=self.config.base_model_path, model=self.model)
+        dataflow_kwargs = dict(
+            target_size=self.config.params_image_size[:-1],
+            batch_size=self.config.params_batch_size,
+            interpolation="bilinear"
+        )
 
-    
+        valid_datagenerator = tf.keras.preprocessing.image.ImageDataGenerator(
+            **datagenerator_kwargs
+        )
+
+        self.valid_generator = valid_datagenerator.flow_from_directory(
+            directory=self.config.training_data,
+            subset="validation",
+            shuffle=False,
+            **dataflow_kwargs
+        )
+
 
     @staticmethod
-    def _prepare_full_model(model, classes, freeze_all, freeze_till, learning_rate):
-        if freeze_all:
-            for layer in model.layers:
-                model.trainable = False
-        elif (freeze_till is not None) and (freeze_till > 0):
-            for layer in model.layers[:-freeze_till]:
-                model.trainable = False
-
-        flatten_in = tf.keras.layers.Flatten()(model.output)
-        prediction = tf.keras.layers.Dense(
-            units=classes,
-            activation="softmax"
-        )(flatten_in)
-
-        full_model = tf.keras.models.Model(
-            inputs=model.input,
-            outputs=prediction
-        )
-
-        full_model.compile(
-            optimizer=tf.keras.optimizers.SGD(learning_rate=learning_rate),
-            loss=tf.keras.losses.CategoricalCrossentropy(),
-            metrics=["accuracy"]
-        )
-
-        full_model.summary()
-        return full_model
+    def load_model(path: Path) -> tf.keras.Model:
+        return tf.keras.models.load_model(path)
     
-    
-    def update_base_model(self):
-        self.full_model = self._prepare_full_model(
-            model=self.model,
-            classes=self.config.params_classes,
-            freeze_all=True,
-            freeze_till=None,
-            learning_rate=self.config.params_learning_rate
-        )
 
-        self.save_model(path=self.config.updated_base_model_path, model=self.full_model)
+    def evaluation(self):
+        self.model = self.load_model(self.config.path_of_model)
+        self._valid_generator()
+        self.score = model.evaluate(self.valid_generator)
+        self.save_score()
+
+    def save_score(self):
+        scores = {"loss": self.score[0], "accuracy": self.score[1]}
+        save_json(path=Path("scores.json"), data=scores)
 
     
+    def log_into_mlflow(self):
+        mlflow.set_registry_uri(self.config.mlflow_uri)
+        tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
         
-    @staticmethod
-    def save_model(path: Path, model: tf.keras.Model):
-        model.save(path)
+        with mlflow.start_run():
+            mlflow.log_params(self.config.all_params)
+            mlflow.log_metrics(
+                {"loss": self.score[0], "accuracy": self.score[1]}
+            )
+            # Model registry does not work with file store
+            if tracking_url_type_store != "file":
+
+                # Register the model
+                # There are other ways to use the Model Registry, which depends on the use case,
+                # please refer to the doc for more information:
+                # https://mlflow.org/docs/latest/model-registry.html#api-workflow
+                mlflow.keras.log_model(self.model, "model", registered_model_name="VGG16Model")
+            else:
+                mlflow.keras.log_model(self.model, "model")

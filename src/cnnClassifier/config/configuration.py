@@ -1,9 +1,12 @@
 from src.cnnClassifier.constants import *
 from src.cnnClassifier.utils.common import read_yaml, create_directories
 from src.cnnClassifier.entity.config_entity import *
+
 import os
 
-
+os.environ["MLFLOW_TRACKING_URI"]="https://dagshub.com/Anuragsingh2002/kedneydiseaseclasifficationdeeplearning.mlflow"
+os.environ["MLFLOW_TRACKING_USERNAME"] = "Anuragsingh2002"
+os.environ["MLFLOW_TRACKING_PASSWORD"] = "582847208a61be0826123c5e83563981e8ff835c"
 
 
 class ConfigurationManager:
@@ -71,3 +74,14 @@ class ConfigurationManager:
         )
 
         return training_config
+    
+    def get_evaluation_config(self) -> EvaluationConfig:
+        eval_config = EvaluationConfig(
+            path_of_model="artifacts/training/model.h5",
+            training_data="artifacts/data_ingestion/kidney-ct-scan-image",
+            mlflow_uri="https://dagshub.com/Anuragsingh2002/kedneydiseaseclasifficationdeeplearning.mlflow",
+            all_params=self.params,
+            params_image_size=self.params.IMAGE_SIZE,
+            params_batch_size=self.params.BATCH_SIZE
+        )
+        return eval_config
