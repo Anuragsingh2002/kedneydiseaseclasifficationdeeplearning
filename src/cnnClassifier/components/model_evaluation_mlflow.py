@@ -7,6 +7,9 @@ from src.cnnClassifier.entity.config_entity import *
 
 from src.cnnClassifier.utils.common import read_yaml, create_directories,save_json
 
+
+
+
 class Evaluation:
     def __init__(self, config: EvaluationConfig):
         self.config = config
@@ -45,7 +48,7 @@ class Evaluation:
     def evaluation(self):
         self.model = self.load_model(self.config.path_of_model)
         self._valid_generator()
-        self.score = model.evaluate(self.valid_generator)
+        self.score = self.model.evaluate(self.valid_generator)
         self.save_score()
 
     def save_score(self):

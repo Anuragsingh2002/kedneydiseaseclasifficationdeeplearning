@@ -1,5 +1,5 @@
 from src.cnnClassifier.config.configuration import ConfigurationManager
-from src.cnnClassifier.components.prepare_base_model import PrepareBaseModel
+from src.cnnClassifier.components.model_evaluation_mlflow import Evaluation
 from src.cnnClassifier import logger
 
 
@@ -11,11 +11,11 @@ class EvaluationPipeline:
         pass
 
     def main(self):
-          config = ConfigurationManager()
-    eval_config = config.get_evaluation_config()
-    evaluation = Evaluation(eval_config)
-    evaluation.evaluation()
-    evaluation.log_into_mlflow()
+        config = ConfigurationManager()
+        eval_config = config.get_evaluation_config()
+        evaluation = Evaluation(eval_config)
+        evaluation.evaluation()
+        #evaluation.log_into_mlflow()
 
 
     
